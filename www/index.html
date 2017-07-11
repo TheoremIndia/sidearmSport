@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <!-- head start -->
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Sidearm Sports- Ticket Master</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $.ajax({
+                    url: 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=Eo2qcHrCLyvTpnZzatDY7GM5LC1D4uK6',
+                    data: {
+                        format: 'json'
+                    },
+                    error: function () {
+                        $('#info').html('<p>An error has occurred</p>');
+                    },
+                    success: function (data) {
+
+                        //array declaration for storing event,venue,and city
+                        var myArray = new Array();
+                        var venuename = new Array();
+                        var myArrayimage = new Array();
+
+                        var data1 = data['_embedded']['events']
+
+                        //outer loop for events
+                        $.each(data1, function (index, element) {
+                            var embeddedIndex = data1[index]['_embedded']['venues'];
+                            $.each(embeddedIndex, function (index, element)
+                            {
+                                venuename = embeddedIndex[index]['name'];
+                                var cityIndex = embeddedIndex[index]['city'];
+
+                                //inner loop for city
+                                $.each(cityIndex, function (index, element) {
+                                    myArray = cityIndex[index];
+                                });
+
+                                // inner loop for images
+                                var imges = embeddedIndex[index]['images'];
+                                $.each(imges, function (index, element)
+                                {
+                                    myArrayimage = imges[index]['url'];
+                                });
+
+                            });
+
+                            //outer loop for events ends
+
+                            //city list code start
+
+                            var $name = '<option data="' + venuename + '" value="' + myArrayimage + '">' + myArray + '</option>';
+                            $('#selectcity').append($name);
+
+                            //city list code end
+
+                        });
+
+                    },
+                });
+
+                // start function for displaying image  
+                $("#submit_img").click(function () {
+                    var selected = $('#selectcity option:selected').val();
+                    var data = $('#selectcity option:selected').attr('data');
+                    if (selected == '') {
+                        alert('Please Select City');
+                    } else {
+                        window.location.href = "city.html?img=" + selected + "&name=" + data;
+                    }
+                });
+                // end function for displaying image 
+
+            });
+        </script>
+    </head>
+    <!-- head end -->
+
+    <!-- body start -->
+    <body>
+
+        <!-- body header start -->
+        <header class="navbar-fixed-top">
+            <div class="container well">
+                <div class="headerleft">
+                    <i class="left"></i>
+                    <label>Root View</label>
+                </div>
+
+                <div class="headerright">
+                    <label>Launch SDK</label>
+                </div>
+            </div>
+        </header>
+        <!-- body header end -->
+
+        <!-- logo start-->
+
+<div class="LoginOuter">
+  <div class="logo">
+            <img src="images/logo.png">
+        </div>
+        <!-- logo end -->
+
+        <!-- heading start -->
+        <div class="headertext">
+            <label>API TEST</label>
+        </div>
+        <!-- heading end-->
+
+        <!-- form  start-->
+        <div class="row">
+        <div class="col-md-12 text-center"> 
+            
+            <form>
+
+                <select name="city"   id="selectcity" class="Select"> 
+                    <option value=""> Please select city</option>
+                </select>
+
+                <div>
+                    <input type="button" name="events" value="SUBMIT" id="submit_img" class="btn btn-primary ButtonSpace10" style="width: 140px;" />
+                </div>
+            </form>
+
+            <div id="info"> </div>
+        </div>
+        </div>
+        <!-- form  end-->
+
+        <!-- create ticket start -->
+        <div class="row">
+        <div class="col-md-offset-3 col-md-6 text-center">
+            <a href="home.html"><button id="button" name="button" class="btn btn-primary">CREATE TICKETS</button></a>
+        </div>
+        </div>
+</div>
+        
+        <!-- create ticket end -->
+
+        <!-- footer start-->
+        <footer class="navbar-fixed-bottom">
+            <div class="container well nopadding">
+                <div class="footercentericon">
+                    &#9733;
+                </div>
+                <div class="footercentertext">
+                    Featured
+                </div>
+            </div>
+        </footer>
+        <!-- footer end-->
+
+    </body>
+</html>

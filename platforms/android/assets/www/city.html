@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>My First App</title>
+
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+
+        <!-- APL Integration -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <Script>
+
+            function GetURLParameter(sParam)
+            {
+                var sPageURL = window.location.search.substring(1);
+                var sURLVariables = sPageURL.split('&');
+                for (var i = 0; i < sURLVariables.length; i++)
+                {
+                    var sParameterName = sURLVariables[i].split('=');
+                    if (sParameterName[0] == sParam)
+                    {
+                        return sParameterName[1];
+                    }
+                }
+
+            }
+
+
+            function goBack() {
+                window.history.back();
+            }
+
+            //document.getElementById("imageid").src=img;
+
+            $(document).ready(function () {
+                var names = GetURLParameter('name').replace(/[^a-z]/gi, ' ');
+                var a = names.replace(/[^a-z]/gi, ' ');
+                $("#name").text(names);
+                $("#my_image").attr('src', GetURLParameter('img'));
+
+            });
+
+        </Script>
+
+    </head>
+    <body>
+
+        <header class="navbar-fixed-top">
+            <div class="container well">
+
+
+                <div class="headerleft">
+                    <button onclick="goBack()">Go Back</button>
+
+
+                </div>
+
+
+            </div>
+        </header>
+
+        <div style="text-align: center;margin-top: 30px;">
+
+            <img id="my_image" height="300" width="300" />
+            <b><p id="name"> </p></b>
+        </div>
+
+
+        <footer class="navbar-fixed-bottom">
+            <div class="container well nopadding">
+                <div class="footercentericon">
+                    &#9733;
+                </div>
+                <div class="footercentertext">
+                    Featured
+                </div>
+            </div>
+        </footer>
+
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </body>
+</html>
+
